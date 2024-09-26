@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="HealthBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/SugerWorld/Art/UI/UIHealthFrameBlue.png?fileID=21300000&amp;guid=4e65018de1d892647ace9c1d6510e500&amp;type=3#UIHealthFrameBlue&quot;); width: 35%; height: 30%; -unity-background-scale-mode: scale-to-fit;">
+        <ui:VisualElement name="HealthBarContainer" style="flex-grow: 1; width: 54%; height: 38%; position: absolute; top: 95px; left: 291px;">
+            <ui:VisualElement name="HealthBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/SugerWorld/Art/UI/UIHealthBarPink.png?fileID=21300000&amp;guid=c71d6f86515064a4bb3d5c78dda9a812&amp;type=3#UIHealthBarPink&quot;); width: 100%; height: 100%; left: auto;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="CharacterPortrait" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/SugerWorld/Art/UI/CharacterPortraitMarshal.png?fileID=21300000&amp;guid=6c5810b436edb3e40917fefe4281bb5f&amp;type=3#CharacterPortraitMarshal&quot;); -unity-background-scale-mode: scale-to-fit; width: 72%; height: 72%; position: absolute; top: 49px; left: -87px;" />
+    </ui:VisualElement>
+</ui:UXML>
