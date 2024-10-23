@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     bool isInvincible;
     float damageCooldown;
 
+    /* ---- ANIMATION ---- */
+    Animator animator;
+    Vector2 moveDirection = new Vector2(0, -0.01f);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +49,9 @@ public class PlayerController : MonoBehaviour
 
         /* ---- HEALTH ---- */
         currentHealth = maxHealth;
+
+        /* ---- ANIMATION ---- */
+        animator = GetComponent<Animator>();
     }
 
     public void ChangeHealth(int amount)
@@ -63,6 +70,9 @@ public class PlayerController : MonoBehaviour
         UnityEngine.Debug.Log("health: " + currentHealth + "/" + maxHealth);
 
         UIHandler.instance.SetHealthValue(currentHealth / (float)maxHealth);
+
+        /* ---- ANIMATION ---- */
+        animator.SetTrigger("Hit");
     }
 
     // Update is called once per frame
@@ -108,6 +118,21 @@ public class PlayerController : MonoBehaviour
                 isInvincible = false;
             }
         }
+
+        /* ---- ANIMATION ---- */
+        if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
+        {
+            moveDirection.Set(horizontal, vertical);
+            // moveDirection.Normalize();
+        }
+        float magnitude = new Vector2(horizontal, vertical).magnitude;
+
+        UnityEngine.Debug.Log("moveDirection " + moveDirection);
+        UnityEngine.Debug.Log("magnitude " + magnitude);
+
+        animator.SetFloat("Look X", moveDirection.x);
+        animator.SetFloat("Look Y", moveDirection.y);
+        animator.SetFloat("Speed", magnitude);
     }
 
     void FixedUpdate()

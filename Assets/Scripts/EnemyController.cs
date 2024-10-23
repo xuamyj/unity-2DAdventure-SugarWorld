@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     public float enemySpeed;
     public bool movesVertically;
+    public bool startReverseDirection;
 
     Rigidbody2D rigidbody2d;
     // float horizontal;
@@ -28,7 +29,15 @@ public class EnemyController : MonoBehaviour
 
         /* ---- REVERSE DIRECTION ---- */
         timeUntilReverse = reverseTime;
-        direction = 1;
+        if (startReverseDirection)
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = 1;
+        }
+
 
         /* ---- ANIMATION ---- */
         animator = GetComponent<Animator>();
