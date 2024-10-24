@@ -29,6 +29,10 @@ public class EnemyController : MonoBehaviour
     AudioSource audioSource;
     public AudioClip enemyFixedClip;
 
+    /* ---- SMOKE PARTICLE ---- */
+    public ParticleSystem smokeEffect;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -132,6 +136,10 @@ public class EnemyController : MonoBehaviour
         // animator.SetFloat("Move Y", -1);
 
         /* ---- AUDIO ---- */
+        audioSource.Stop();
         audioSource.PlayOneShot(enemyFixedClip);
+
+        /* ---- SMOKE PARTICLE ---- */
+        smokeEffect.Stop();
     }
 }
