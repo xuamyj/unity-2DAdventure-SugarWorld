@@ -36,6 +36,15 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public InputAction launchAction;
 
+    /* ---- TALK ---- */
+    public InputAction talkAction;
+
+    /* ---- AUDIO ---- */
+    AudioSource audioSource;
+    public AudioClip playerHitClip;
+    public AudioClip throwCogClip;
+    public AudioClip questCompleteClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +69,18 @@ public class PlayerController : MonoBehaviour
         /* ---- PROJECTILE ---- */
         launchAction.Enable();
         launchAction.performed += Launch;
+
+        /* ---- TALK ---- */
+        talkAction.Enable();
+        talkAction.performed += FindFriend;
+
+        /* ---- AUDIO ---- */
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 
     public void ChangeHealth(int amount)
@@ -72,15 +93,17 @@ public class PlayerController : MonoBehaviour
             }
             isInvincible = true;
             damageCooldown = timeInvincible;
+
+            /* ---- ANIMATION ---- */
+            animator.SetTrigger("Hit");
+            /* ---- AUDIO ---- */
+            PlaySound(playerHitClip);
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UnityEngine.Debug.Log("health: " + currentHealth + "/" + maxHealth);
 
         UIHandler.instance.SetHealthValue(currentHealth / (float)maxHealth);
-
-        /* ---- ANIMATION ---- */
-        animator.SetTrigger("Hit");
     }
 
     // Update is called once per frame
@@ -135,8 +158,8 @@ public class PlayerController : MonoBehaviour
         }
         float magnitude = new Vector2(horizontal, vertical).magnitude;
 
-        UnityEngine.Debug.Log("moveDirection " + moveDirection);
-        UnityEngine.Debug.Log("magnitude " + magnitude);
+        // UnityEngine.Debug.Log("moveDirection " + moveDirection);
+        // UnityEngine.Debug.Log("magnitude " + magnitude);
 
         animator.SetFloat("Look X", moveDirection.x);
         animator.SetFloat("Look Y", moveDirection.y);
@@ -162,5 +185,23 @@ public class PlayerController : MonoBehaviour
 
         /* ---- ANIMATION ---- */
         animator.SetTrigger("Launch");
+        /* ---- AUDIO ---- */
+        PlaySound(throwCogClip);
+    }
+
+    /* ---- TALK ---- */
+    void FindFriend(InputAction.CallbackContext context)
+    {
+        // UnityEngine.Debug.Log("Raycast attempted");
+
+        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.4f, moveDirection, 1.5f, LayerMask.GetMask("Friend"));
+        if (hit.collider != null)
+        {
+            UnityEngine.Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Nope");
+        }
     }
 }

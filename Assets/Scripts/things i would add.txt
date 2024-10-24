@@ -1,0 +1,9 @@
+things i would add
+
+- game over screen when lose all health
+- win screen when get the win obj
+- have the health and win things animate (scale increase-decrease if gettable)
+- have the danger zone animate (move x left-right if dangerous)
+- enemy walk from tutorial
+- character dialogue like tutorial but don't use that
+- 

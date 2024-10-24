@@ -25,6 +25,10 @@ public class EnemyController : MonoBehaviour
     /* ---- PROJECTILE ---- */
     bool aggressive = true;
 
+    /* ---- AUDIO ---- */
+    AudioSource audioSource;
+    public AudioClip enemyFixedClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,9 +46,11 @@ public class EnemyController : MonoBehaviour
             direction = 1;
         }
 
-
         /* ---- ANIMATION ---- */
         animator = GetComponent<Animator>();
+
+        /* ---- AUDIO ---- */
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -124,5 +130,8 @@ public class EnemyController : MonoBehaviour
         /* ---- ANIMATION ---- */
         // animator.SetFloat("Move X", 0);
         // animator.SetFloat("Move Y", -1);
+
+        /* ---- AUDIO ---- */
+        audioSource.PlayOneShot(enemyFixedClip);
     }
 }
