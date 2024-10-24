@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
     public float enemySpeed;
     public bool movesVertically;
     public bool startReverseDirection;
@@ -20,6 +21,9 @@ public class EnemyController : MonoBehaviour
     public float reverseTime;
     float timeUntilReverse;
     float direction; // 1 or -1
+
+    /* ---- PROJECTILE ---- */
+    bool aggressive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +52,12 @@ public class EnemyController : MonoBehaviour
     {
         // horizontal = enemySpeed;
         // vertical = 0.0f;
+
+        /* ---- PROJECTILE ---- */
+        if (!aggressive)
+        {
+            return;
+        }
 
         /* ---- ANIMATION ---- */
         if (movesVertically)
@@ -87,6 +97,12 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
+        /* ---- PROJECTILE ---- */
+        if (!aggressive)
+        {
+            return;
+        }
+
         Vector2 position = rigidbody2d.position;
         if (movesVertically)
         {
@@ -97,5 +113,16 @@ public class EnemyController : MonoBehaviour
             position.x = position.x + direction * enemySpeed * Time.deltaTime;
         }
         rigidbody2d.MovePosition(position);
+    }
+
+    /* ---- PROJECTILE ---- */
+    public void Fix()
+    {
+        aggressive = false;
+        rigidbody2d.simulated = false; // no longer collide with projectiles or damage player
+
+        /* ---- ANIMATION ---- */
+        // animator.SetFloat("Move X", 0);
+        // animator.SetFloat("Move Y", -1);
     }
 }

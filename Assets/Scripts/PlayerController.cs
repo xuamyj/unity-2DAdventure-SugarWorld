@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     Vector2 moveDirection = new Vector2(0, -0.01f);
 
+    /* ---- PROJECTILE ---- */
+    public GameObject projectilePrefab;
+    public InputAction launchAction;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +56,10 @@ public class PlayerController : MonoBehaviour
 
         /* ---- ANIMATION ---- */
         animator = GetComponent<Animator>();
+
+        /* ---- PROJECTILE ---- */
+        launchAction.Enable();
+        launchAction.performed += Launch;
     }
 
     public void ChangeHealth(int amount)
@@ -142,5 +150,17 @@ public class PlayerController : MonoBehaviour
         position.y = position.y + vertical * Time.deltaTime;
         // transform.position = position;
         rigidbody2d.MovePosition(position);
+    }
+
+    /* ---- PROJECTILE ---- */
+    void Launch(InputAction.CallbackContext context)
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(moveDirection, 300);
+
+        /* ---- ANIMATION ---- */
+        animator.SetTrigger("Launch");
     }
 }
