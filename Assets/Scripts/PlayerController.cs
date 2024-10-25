@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using LivelyChatBubbles;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -129,7 +130,7 @@ public class PlayerController : MonoBehaviour
         }
         // UnityEngine.Debug.Log("keyboard horizontal: " + horizontal);
 
-        vertical = 0.0f;
+        vertical = -0.0f;
         if (DownAction.IsPressed())
         {
             vertical = -speed;
@@ -181,7 +182,8 @@ public class PlayerController : MonoBehaviour
         GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-        projectile.Launch(moveDirection, 300);
+        // UnityEngine.Debug.Log(moveDirection);
+        projectile.Launch(moveDirection.normalized, 800);
 
         /* ---- ANIMATION ---- */
         animator.SetTrigger("Launch");
@@ -198,6 +200,12 @@ public class PlayerController : MonoBehaviour
         if (hit.collider != null)
         {
             UnityEngine.Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+
+            FriendController friend = hit.collider.GetComponent<FriendController>();
+            if (friend != null)
+            {
+                friend.GiveInstructions();
+            }
         }
         else
         {

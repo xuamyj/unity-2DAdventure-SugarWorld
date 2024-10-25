@@ -65,7 +65,7 @@ namespace LivelyChatBubbles
 			var pauseTime = 0F;
 
 			// loop until the entire value has been outputted
-			while ( charIndex < Value.Length )
+			while (charIndex < Value.Length)
 			{
 				// skip a frame
 				yield return null;
@@ -118,7 +118,7 @@ namespace LivelyChatBubbles
 					AudioSource.Play();
 
 				// wait here for a bit if we ran into any pause characters
-				if ( pauseTime > 0 )
+				if (pauseTime > 0)
 				{
 					yield return new WaitForSeconds(pauseTime);
 					lastProcessedTime = Time.time;
@@ -130,7 +130,7 @@ namespace LivelyChatBubbles
 			if (Profile.CompletionClick)
 			{
 				// wait for click
-				while (!Input.GetMouseButtonUp(0) && !Input.GetKeyUp(KeyCode.Return) )
+				while (!Input.GetMouseButtonUp(1) && !Input.GetKeyUp(KeyCode.Return))
 					yield return null;
 			}
 			else
@@ -145,7 +145,7 @@ namespace LivelyChatBubbles
 
 		// text <b>bold here</b> <color="#FFFFFF">color here <b>bold with color</b></color> and a lower font size <size=8>large size with some <i>italics here</i></size>!!
 		//      <b>         </b> <color="#FFFFFF">           <b>               </b></color>                       <size=8>                     <i>            </i></size>  
-		char[] GetValueTemplate( string value )
+		char[] GetValueTemplate(string value)
 		{
 			var matches = Regex.Matches(value, @"<[^>]*>").Cast<Match>().ToArray();
 			var template = new char[value.Length];
@@ -154,7 +154,7 @@ namespace LivelyChatBubbles
 			for (int m = 0; m < matches.Length; m++)
 				for (int c = 0; c < matches[m].Value.Length; c++)
 					template[matches[m].Index + c] = matches[m].Value[c];
-			return template;			
+			return template;
 		}
 	}
 
